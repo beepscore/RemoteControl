@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 /**
@@ -22,6 +24,13 @@ public class RemoteControlFragment extends Fragment {
         mSelectedTextView = (TextView)view.findViewById(R.id.fragment_remote_control_selectedTextView);
         mWorkingTextView = (TextView)view.findViewById(R.id.fragment_remote_control_workingTextView);
 
+        configureButtonsTextAndListener(view);
+
+        return view;
+    }
+
+    private void configureButtonsTextAndListener(View view) {
+
         View.OnClickListener numberButtonListener = new View.OnClickListener() {
             public void onClick(View view) {
                 TextView textView = (TextView)view;
@@ -35,6 +44,55 @@ public class RemoteControlFragment extends Fragment {
             }
         };
 
+        // configure buttons in code rather than xml
+        TableLayout tableLayout = (TableLayout)view.findViewById(R.id.fragment_remote_control_tableLayout);
+        int number = 1;
+
+        // configure number rows except bottom row
+        // skip first two TextViews
+        final int NUMBER_OF_VIEWS_TO_SKIP = 2;
+        for (int i = NUMBER_OF_VIEWS_TO_SKIP; i < tableLayout.getChildCount() - 1; i++) {
+            TableRow tableRow = (TableRow)tableLayout.getChildAt(i);
+            for (int j = 0; j < tableRow.getChildCount(); j++) {
+                Button button = (Button)tableRow.getChildAt(j);
+                button.setText("" + number);
+                button.setOnClickListener(numberButtonListener);
+                number++;
+            }
+        }
+
+        // configure bottom row
+        TableRow bottomRow = (TableRow)tableLayout.getChildAt(tableLayout.getChildCount() - 1);
+
+        Button deleteButton = (Button)bottomRow.getChildAt(0);
+        configureAsDeleteButton(deleteButton);
+
+        Button zeroButton = (Button)bottomRow.getChildAt(1);
+        configureAsZeroButton(numberButtonListener, zeroButton);
+
+        Button enterButton = (Button)bottomRow.getChildAt(2);
+        configureAsEnterButton(enterButton);
+    }
+
+    private void configureAsDeleteButton(Button deleteButton) {
+        deleteButton.setText("Delete");
+
+        View.OnClickListener deleteButtonListener = new View.OnClickListener() {
+            public void onClick(View view) {
+                mWorkingTextView.setText("0");
+            }
+        };
+        deleteButton.setOnClickListener(deleteButtonListener);
+    }
+
+    private void configureAsZeroButton(View.OnClickListener numberButtonListener, Button zeroButton) {
+        zeroButton.setText("0");
+        zeroButton.setOnClickListener(numberButtonListener);
+    }
+
+    private void configureAsEnterButton(Button enterButton) {
+        enterButton.setText("Enter");
+
         View.OnClickListener enterButtonListener = new View.OnClickListener() {
             public void onClick(View view) {
                 CharSequence working = mWorkingTextView.getText();
@@ -44,16 +102,7 @@ public class RemoteControlFragment extends Fragment {
                 mWorkingTextView.setText("0");
             }
         };
-
-        Button zeroButton = (Button)view.findViewById(R.id.fragment_remote_control_zeroButton);
-        zeroButton.setOnClickListener(numberButtonListener);
-
-        Button oneButton = (Button)view.findViewById(R.id.fragment_remote_control_oneButton);
-        oneButton.setOnClickListener(numberButtonListener);
-
-        Button enterButton = (Button)view.findViewById(R.id.fragment_remote_control_enterButton);
         enterButton.setOnClickListener(enterButtonListener);
-
-        return view;
     }
+
 }
