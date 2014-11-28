@@ -3,4 +3,6 @@
     <color name="text_view_background">#555555</color>
     <color name="text_view_text">#eeeeaa</color>
     <color name="button_text">#cccccc</color>
+    <color name="button_background_start">#888888</color>
+    <color name="button_background_end">#666666</color>
 </resources>
