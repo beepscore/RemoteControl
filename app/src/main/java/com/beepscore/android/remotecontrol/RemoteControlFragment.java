@@ -36,7 +36,7 @@ public class RemoteControlFragment extends Fragment {
                 TextView textView = (TextView)view;
                 String working = mWorkingTextView.getText().toString();
                 String text = textView.getText().toString();
-                if (working.equals("0")) {
+                if (working.equals(R.string.zero)) {
                     mWorkingTextView.setText(text);
                 } else {
                     mWorkingTextView.setText(working + text);
@@ -75,23 +75,23 @@ public class RemoteControlFragment extends Fragment {
     }
 
     private void configureAsDeleteButton(Button deleteButton) {
-        deleteButton.setText("Delete");
+        deleteButton.setText(R.string.delete);
 
         View.OnClickListener deleteButtonListener = new View.OnClickListener() {
             public void onClick(View view) {
-                mWorkingTextView.setText("0");
+                mWorkingTextView.setText(R.string.zero);
             }
         };
         deleteButton.setOnClickListener(deleteButtonListener);
     }
 
     private void configureAsZeroButton(View.OnClickListener numberButtonListener, Button zeroButton) {
-        zeroButton.setText("0");
+        zeroButton.setText(R.string.zero);
         zeroButton.setOnClickListener(numberButtonListener);
     }
 
     private void configureAsEnterButton(Button enterButton) {
-        enterButton.setText("Enter");
+        enterButton.setText(R.string.enter);
 
         View.OnClickListener enterButtonListener = new View.OnClickListener() {
             public void onClick(View view) {
@@ -99,7 +99,7 @@ public class RemoteControlFragment extends Fragment {
                 if (working.length() > 0) {
                     mSelectedTextView.setText(working);
                 }
-                mWorkingTextView.setText("0");
+                mWorkingTextView.setText(R.string.zero);
             }
         };
         enterButton.setOnClickListener(enterButtonListener);
