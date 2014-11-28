@@ -75,6 +75,7 @@ public class RemoteControlFragment extends Fragment {
     }
 
     private void configureAsDeleteButton(Button deleteButton) {
+        deleteButton.setTextAppearance(getActivity(), R.style.RemoteButton_bold);
         deleteButton.setText(R.string.delete);
 
         View.OnClickListener deleteButtonListener = new View.OnClickListener() {
@@ -91,6 +92,7 @@ public class RemoteControlFragment extends Fragment {
     }
 
     private void configureAsEnterButton(Button enterButton) {
+        enterButton.setTextAppearance(getActivity(), R.style.RemoteButton_bold);
         enterButton.setText(R.string.enter);
 
         View.OnClickListener enterButtonListener = new View.OnClickListener() {
